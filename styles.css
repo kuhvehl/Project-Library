@@ -1,0 +1,138 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 
+  "header"
+  "main";
+  grid-template-rows: 1fr 6fr;
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-areas: 
+  ". logo log-in .";
+  grid-template-columns: minmax(1rem, .5fr) 2fr 2fr minmax(1rem, .5fr);
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+  z-index: 1;
+}
+
+.logo {
+  grid-area: logo;
+  display: grid;
+  justify-items: start;
+}
+
+.log-in {
+  grid-area: log-in;
+  display: grid;
+  justify-items: end;
+}
+
+.log-in button {
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 10px;
+}
+
+.log-in button:hover {
+  background-color: lightgray;
+}
+
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-areas:
+  ". add-book . "
+  ". book-cards .";
+  grid-template-rows: 1fr 6fr;
+  grid-template-columns: minmax(1rem, .5fr) 4fr minmax(1rem, .5fr) ;
+  background-color: rgb(235, 235, 235);
+}
+
+.add-book {
+  grid-area: add-book;
+  display: grid;
+  place-items: center;
+}
+
+.add-book button {
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.add-book button:hover {
+  background-color: lightgray;
+}
+
+.book-cards {
+  grid-area: book-cards;
+  display: grid;
+  /* justify-items: center;
+  align-items: start; */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: auto;
+  align-items: start;
+  gap: 2rem;
+}
+
+.book-card {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+  padding: 2rem;
+  gap: .75rem;
+  display: grid;
+  justify-items: center;
+  align-items: stretch;
+  align-content: stretch;
+  border-radius: 10px;
+}
+
+.book-card button {
+  width: 100%;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border: none;
+  border-radius: 10px;
+}
+
+.book-card button:hover {
+  background-color: lightgray;
+}
+
+.toggle-read {
+  background-color:greenyellow
+}
+
+.book-card .toggle-read:hover {
+  background-color:rgb(120, 200, 0)
+}
