@@ -3,60 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
     <title>Library</title>
+    <script src="/script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Books</h1>
-        </div>
-        <div class="button">
-            <button id="newBookButton"><h3>New Book</h3></button>
-            <div id="formDiv">
-                <form action='' method='get' class='bookForm'id="bookForm">
-                    <div class="formRow">
-                        <div class="formElement">
-                            <label for="Title">Title (required)</label>
-                            <input id="Title" name="Title" type='text' required/>
-                        </div>
-                    </div>
-                    <div class="formRow">
-                        <div class="formElement">
-                            <label for="Author">Author (required)</label>
-                            <input id="Author" name="Author" type='text' required/>
-                        </div>
-                    </div>
-                    <div class="formRow">
-                        <div class="formElement">
-                            <label for="Pages">Pages (required)</label>
-                            <input id="Pages" name="Pages" type='text' required/>
-                        </div>
-                    </div>
-                    <fieldset class='legacy-form-row'>
-                        <legend>Read Status</legend>
-                        <input id='read-status-1'
-                               name='read-status'
-                               type='radio'
-                               value='Read it!' />
-                        <label for='read-status-1' class='radio-label'>Read it!</label>
-                        <input id='talk-type-2'
-                               name='read-status'
-                               type='radio'
-                               value='Not yet...'
-                               checked />
-                        <label for='talk-type-2' class='radio-label'>Not yet...</label>
-                      </fieldset>
-                      <div class='form-row button'>
-                        <button>Submit</button>
-                      </div>
-                </form>
-            </div>
-        </div>
-        <div id="bookContainer">
-        </div>
-    </div>
-</div>
+    
 </body>
-<script src="./script.js"></script>
 </html>
