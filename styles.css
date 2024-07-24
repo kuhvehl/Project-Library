@@ -29,7 +29,7 @@ p, h1, h2, h3, h4, h5, h6 {
   grid-template-areas: 
   "header"
   "main";
-  grid-template-rows: 1fr 6fr;
+  grid-template-rows: minmax(100px, 1fr) 6fr;
   height: 100vh;
 }
 
@@ -72,7 +72,7 @@ p, h1, h2, h3, h4, h5, h6 {
   grid-template-areas:
   ". add-book . "
   ". book-cards .";
-  grid-template-rows: 1fr 6fr;
+  grid-template-rows: .75fr 6fr;
   grid-template-columns: minmax(1rem, .5fr) 4fr minmax(1rem, .5fr) ;
   background-color: rgb(235, 235, 235);
 }
@@ -115,6 +115,10 @@ p, h1, h2, h3, h4, h5, h6 {
   align-items: stretch;
   align-content: stretch;
   border-radius: 10px;
+}
+
+.title {
+  font-style: italic;
 }
 
 .book-card button {
