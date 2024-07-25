@@ -7,14 +7,13 @@ function Book(title, author, pages, read) {
   this.read = read
 }
 
+Book.prototype.toggleRead = function () {
+    this.read = !this.read;
+}
+
 function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(new Book(title, author, pages, read));
 }
-
-addBookToLibrary('test book 1', 'test author 1', 100, true);
-addBookToLibrary('test book 2', 'test author 2', 100, true);
-addBookToLibrary('test book 3', 'test author 3', 300, false);
-addBookToLibrary('test book 4', 'test author 4', 400, false);
 
 const bookCards = document.querySelector('.book-cards')
 const addBook = document.querySelector(".add-book");
@@ -67,7 +66,7 @@ function displayBooks() {
         title.classList.add('title');
         author.classList.add('author');
         pages.classList.add('pages');
-        read.classList.add('toggle-read');
+        read.classList.add('toggle-read', book.read);
         remove.classList.add('remove');
         
         title.textContent = book.title;
@@ -84,6 +83,13 @@ function displayBooks() {
         remove.addEventListener('click', function(e) {
             let i = e.target.dataset.indexNumber;
             myLibrary.splice(i, 1);
+            clearBooks();
+            displayBooks();
+        })
+
+        read.addEventListener('click', function(e) {
+            let i = e.target.dataset.indexNumber;
+            myLibrary[i].toggleRead();
             clearBooks();
             displayBooks();
         })
@@ -112,5 +118,3 @@ function readMessage(status) {
 function removeBook(i) {
     myLibrary.splice(i, i);
 }
-
-displayBooks();

@@ -232,6 +232,14 @@ input[type='radio'] {
   background-color:greenyellow
 }
 
+.toggle-read.false {
+  background-color: lightcoral;
+}
+
+.book-card .toggle-read.false:hover {
+  background-color: rgb(208, 96, 96);
+}
+
 .book-card .toggle-read:hover {
   background-color:rgb(120, 200, 0)
 }
