@@ -94,6 +94,101 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: lightgray;
 }
 
+dialog[open] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  max-width: 100%;
+  display: grid;
+  gap: .5rem;
+  background-color: rgb(235, 235, 235);
+  border-radius: 10px;
+  border: none;
+  z-index: 3;
+}
+
+::backdrop {
+  background-image: linear-gradient(
+    45deg,
+    grey,
+    darkgrey,
+    lightgrey
+  );
+  opacity: 0.9;
+}
+
+.book-cards dialog .cancel {
+  background-color: lightcoral;
+  border: none;
+  border-radius: 10px;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.book-cards dialog .cancel:hover  {
+  background-color: rgb(210, 105, 105);
+  border: none;
+  border-radius: 10px;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+dialog form {
+  display: grid;
+  gap: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+dialog form div {
+  display: grid;
+  row-gap: .25rem;
+}
+
+input {
+  justify-self: start;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  height: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.read-input {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.read-input div {
+  display: flex;
+  gap: .25rem;
+}
+
+input[type='radio'] {
+  height: 100%;
+  width: 1rem;
+}
+
+.book-cards dialog .submit  {
+  background-color:greenyellow;
+  border-radius: 10px;
+  border: none;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.book-cards dialog .submit:hover  {
+  background-color:rgb(120, 200, 0);
+  border-radius: 10px;
+  border: none;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
 .book-cards {
   grid-area: book-cards;
   display: grid;

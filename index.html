@@ -21,7 +21,37 @@
             <div class="add-book">
                 <button>+ Add Book</button>
             </div>
-            <div class="book-cards"></div>
+            <div class="book-cards">
+                <dialog>
+                    <button class="cancel" form="newBookForm" value="cancel" formnovalidate>Cancel</button>
+                    <form id="newBookForm" method="dialog">
+                        <div class="title-input">
+                            <label for="title">Title:</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="author-input">
+                            <label for="author">Author:</label>
+                            <input type="text" id="author" name="author" required>
+                        </div>
+                        <div class="pages-input">
+                            <label for="pages">Pages:</label>
+                            <input type="number" id="pages" name="pages" required>
+                        </div>
+                        <fieldset class="read-input">
+                            <legend>Have you read it?</legend>
+                            <div>
+                                <input type="radio" id="read" name="readStatus" value="true" checked>
+                                <label for="read">Yes</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="notRead" name="readStatus" value="false">
+                                <label for="notRead">No</label>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <button class="submit" type="submit" form="newBookForm" value="submit">Submit</button>
+                </dialog>
+            </div>
         </div>
     </div>    
 </body>
