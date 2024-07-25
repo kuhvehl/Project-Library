@@ -52,6 +52,8 @@ dialog.addEventListener('close', (e) => {
 })
 
 function displayBooks() {
+    let index = 0;
+
     myLibrary.forEach(function addBook(book) {
         const bookCard = document.createElement('div');
         const title = document.createElement('div');
@@ -60,7 +62,7 @@ function displayBooks() {
         const read = document.createElement('button')
         const remove = document.createElement('button')
         const readText = readMessage(book.read);
-        
+
         bookCard.classList.add('book-card');
         title.classList.add('title');
         author.classList.add('author');
@@ -73,6 +75,18 @@ function displayBooks() {
         pages.textContent = `${book.pages} pages`;
         read.textContent = readText;
         remove.textContent = 'Remove';
+
+        bookCard.setAttribute('data-index-number', index);
+        read.setAttribute('data-index-number', index);
+        remove.setAttribute('data-index-number', index);
+        index++
+
+        remove.addEventListener('click', function(e) {
+            let i = e.target.dataset.indexNumber;
+            myLibrary.splice(i, 1);
+            clearBooks();
+            displayBooks();
+        })
         
         bookCard.appendChild(title);
         bookCard.appendChild(author);
@@ -93,6 +107,10 @@ function clearBooks() {
 
 function readMessage(status) {
     return status ? 'Read' : 'Not read';
+}
+
+function removeBook(i) {
+    myLibrary.splice(i, i);
 }
 
 displayBooks();
