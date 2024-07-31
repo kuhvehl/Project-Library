@@ -1,19 +1,24 @@
 class Library {
-    constructor() {
-        this.library = [];
-    }
+    #library = [];
 
     addBook(_title, _author, _pages, _read) {
-        this.library.push(new Book(_title, _author, _pages, _read));
+        this.#library.push(new Book(_title, _author, _pages, _read));
     }
 
     removeBook(i) {
-        this.library.splice(i, 1);
+        this.#library.splice(i, 1);
+    }
+
+    getBooks() {
+        return this.#library;
+    }
+
+    getBook(index) {
+        return this.#library[index];
     }
 }
 
 const myLibrary = new Library();
-
 
 class Book {
     constructor(_title, _author, _pages, _read) {
@@ -28,127 +33,113 @@ class Book {
     }
 }
 
-// function Book(title, author, pages, read) {
-//   this.title = title,
-//   this.author = author,
-//   this.pages = pages,
-//   this.read = read
-// }
+class Display {
+    constructor(library) {
+        this.library = library;
+        //main dom selectors
+        this.bookCards = document.querySelector('.book-cards');
+        this.addBook = document.querySelector(".add-book");
+        this.dialog = document.querySelector('dialog');
+        
+        //form dom selectors
+        this.cancelButton = document.querySelector('.cancel');
+        this.submitButton = document.querySelector('.submit');
+        this.titleInput = document.querySelector('#title')
+        this.authorInput = document.querySelector('#author')
+        this.pagesInput = document.querySelector('#pages')
+        this.readInput = document.getElementsByName('readStatus')
+        this.form = document.querySelector("form");
 
-// Book.prototype.toggleRead = function () {
-//     this.read = !this.read;
-// }
+        //add main listeners
+        this.addBook.addEventListener("click", this.addBookOpen)  
+        this.dialog.addEventListener('close', this.closeDialog)
+    }
 
-// function addBookToLibrary(title, author, pages, read) {
-//     myLibrary.push(new Book(title, author, pages, read));
-// }
+    addBookOpen = () => {
+        this.titleInput.value = ''
+        this.authorInput.value = ''
+        this.pagesInput.value = ''
+        this.readInput[0].checked = true;
+        this.readInput[1].checked = false;
+        this.dialog.showModal(); 
+    }
 
-const bookCards = document.querySelector('.book-cards')
-const addBook = document.querySelector(".add-book");
-const dialog = document.querySelector('dialog');
-const cancelButton = document.querySelector('.cancel');
-const submitButton = document.querySelector('.submit');
-
-const titleInput = document.querySelector('#title')
-const authorInput = document.querySelector('#author')
-const pagesInput = document.querySelector('#pages')
-const readInput = document.getElementsByName('readStatus')
-const form = document.querySelector("form");
-
-addBook.addEventListener("click", () => {
-    titleInput.value = ''
-    authorInput.value = ''
-    pagesInput.value = ''
-    readInput[0].checked = true;
-    readInput[1].checked = false;
-    
-    dialog.showModal();
-  });
-
-dialog.addEventListener('close', (e) => {
-    if (dialog.returnValue === 'submit') {
-        const newTitle = form.title.value;
-        const newAuthor = form.author.value;
-        const newPages = form.pages.value;
-        let newStatus = form.readStatus.value;
-        if (newStatus === 'false') {
-            newStatus = false;
+    closeDialog = () => {
+        if (this.dialog.returnValue === 'submit') {
+            const newTitle = this.form.title.value;
+            const newAuthor = this.form.author.value;
+            const newPages = this.form.pages.value;
+            let newStatus = this.form.readStatus.value;
+            if (newStatus === 'false') {
+                newStatus = false;
+            }
+            this.library.addBook(newTitle, newAuthor, newPages, newStatus);
+            this.clearBooks();
+            this.displayBooks();
         }
-
-        myLibrary.addBook(newTitle, newAuthor, newPages, newStatus);
-        // addBookToLibrary(newTitle, newAuthor, newPages, newStatus)
-        clearBooks()
-        displayBooks();
     }
-})
 
-function displayBooks() {
-    let index = 0;
+    clearBooks = () => {
+        let sibling = this.dialog.nextSibling
+        while (sibling) {
+            this.dialog.nextSibling.remove();
+            sibling = this.dialog.nextSibling
+        }
+    }
 
-    myLibrary.library.forEach(function addBook(book) {
+    displayBooks = () => {
+        this.clearBooks();
+
+        this.library.getBooks().forEach((book, index) => {
+            const bookCard = this.createBookCard(book, index);
+            this.bookCards.append(bookCard);
+        })
+    }
+
+    createBookCard = (book, index) => {
         const bookCard = document.createElement('div');
-        const title = document.createElement('div');
-        const author = document.createElement('div')
-        const pages = document.createElement('div')
-        const read = document.createElement('button')
-        const remove = document.createElement('button')
-        const readText = readMessage(book.read);
-
         bookCard.classList.add('book-card');
-        title.classList.add('title');
-        author.classList.add('author');
-        pages.classList.add('pages');
-        read.classList.add('toggle-read', book.read);
-        remove.classList.add('remove');
-        
-        title.textContent = book.title;
-        author.textContent = book.author;
-        pages.textContent = `${book.pages} pages`;
-        read.textContent = readText;
-        remove.textContent = 'Remove';
-
         bookCard.setAttribute('data-index-number', index);
-        read.setAttribute('data-index-number', index);
-        remove.setAttribute('data-index-number', index);
-        index++
 
-        remove.addEventListener('click', function(e) {
-            let i = e.target.dataset.indexNumber;
-            myLibrary.removeBook(i)
-            // myLibrary.splice(i, 1);
-            clearBooks();
-            displayBooks();
-        })
+        const title = this.createBookElement('div', 'title', book.title);
+        const author = this.createBookElement('div', 'author', book.author);
+        const pages = this.createBookElement('div', 'pages', book.pages);
+        const read = this.createBookElement('button', `toggle-read ${book.read}`, 
+        this.readMessage(book.read));
+        const remove = this.createBookElement('button', 'remove', 'Remove')
 
-        read.addEventListener('click', function(e) {
-            let i = e.target.dataset.indexNumber;
-            myLibrary.library[i].toggleRead();
-            // myLibrary.library.toggleRead(i);
-            clearBooks();
-            displayBooks();
-        })
-        
-        bookCard.appendChild(title);
-        bookCard.appendChild(author);
-        bookCard.appendChild(pages);
-        bookCard.appendChild(read);
-        bookCard.appendChild(remove);
-        bookCards.append(bookCard);
-    })
-}
+        read.dataset.indexNumber = index;
+        remove.dataset.indexNumber = index;
 
-function clearBooks() {
-    let sibling = dialog.nextSibling
-    while (sibling) {
-        dialog.nextSibling.remove();
-        sibling = dialog.nextSibling
+        read.addEventListener('click', this.toggleReadStatus);
+        remove.addEventListener('click', this.removeBook);
+
+        bookCard.append(title, author, pages, read, remove);
+        return bookCard;
+    }
+
+    createBookElement = (elementType, className, textContent) => {
+        const element = document.createElement(elementType);
+        element.className = className;
+        element.textContent = textContent;
+        return element;
+    }
+
+    readMessage = (status) => {
+        return status ? 'Read' : 'Not read';
+    }
+
+    toggleReadStatus = (e) => {
+        const index = e.target.dataset.indexNumber;
+        this.library.getBook(index).toggleRead();
+        this.displayBooks();
+    }
+
+    removeBook = (e) => {
+        const index = e.target.dataset.indexNumber;
+        this.library.removeBook(index);
+        this.displayBooks();
     }
 }
 
-function readMessage(status) {
-    return status ? 'Read' : 'Not read';
-}
-
-function removeBook(i) {
-    myLibrary.splice(i, i);
-}
+const display = new Display(myLibrary);
