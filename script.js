@@ -1,19 +1,47 @@
-const myLibrary = [];
+class Library {
+    constructor() {
+        this.library = [];
+    }
 
-function Book(title, author, pages, read) {
-  this.title = title,
-  this.author = author,
-  this.pages = pages,
-  this.read = read
+    addBook(_title, _author, _pages, _read) {
+        this.library.push(new Book(_title, _author, _pages, _read));
+    }
+
+    removeBook(i) {
+        this.library.splice(i, 1);
+    }
 }
 
-Book.prototype.toggleRead = function () {
-    this.read = !this.read;
+const myLibrary = new Library();
+
+
+class Book {
+    constructor(_title, _author, _pages, _read) {
+        this.title = _title;
+        this.author = _author;
+        this.pages = _pages; 
+        this.read = _read;
+    }
+
+    toggleRead() {
+        this.read = !this.read;
+    }
 }
 
-function addBookToLibrary(title, author, pages, read) {
-    myLibrary.push(new Book(title, author, pages, read));
-}
+// function Book(title, author, pages, read) {
+//   this.title = title,
+//   this.author = author,
+//   this.pages = pages,
+//   this.read = read
+// }
+
+// Book.prototype.toggleRead = function () {
+//     this.read = !this.read;
+// }
+
+// function addBookToLibrary(title, author, pages, read) {
+//     myLibrary.push(new Book(title, author, pages, read));
+// }
 
 const bookCards = document.querySelector('.book-cards')
 const addBook = document.querySelector(".add-book");
@@ -47,7 +75,8 @@ dialog.addEventListener('close', (e) => {
             newStatus = false;
         }
 
-        addBookToLibrary(newTitle, newAuthor, newPages, newStatus)
+        myLibrary.addBook(newTitle, newAuthor, newPages, newStatus);
+        // addBookToLibrary(newTitle, newAuthor, newPages, newStatus)
         clearBooks()
         displayBooks();
     }
@@ -56,7 +85,7 @@ dialog.addEventListener('close', (e) => {
 function displayBooks() {
     let index = 0;
 
-    myLibrary.forEach(function addBook(book) {
+    myLibrary.library.forEach(function addBook(book) {
         const bookCard = document.createElement('div');
         const title = document.createElement('div');
         const author = document.createElement('div')
@@ -85,14 +114,16 @@ function displayBooks() {
 
         remove.addEventListener('click', function(e) {
             let i = e.target.dataset.indexNumber;
-            myLibrary.splice(i, 1);
+            myLibrary.removeBook(i)
+            // myLibrary.splice(i, 1);
             clearBooks();
             displayBooks();
         })
 
         read.addEventListener('click', function(e) {
             let i = e.target.dataset.indexNumber;
-            myLibrary[i].toggleRead();
+            myLibrary.library[i].toggleRead();
+            // myLibrary.library.toggleRead(i);
             clearBooks();
             displayBooks();
         })
