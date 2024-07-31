@@ -42,7 +42,10 @@ dialog.addEventListener('close', (e) => {
         const newTitle = form.title.value;
         const newAuthor = form.author.value;
         const newPages = form.pages.value;
-        const newStatus = form.readStatus.value;
+        let newStatus = form.readStatus.value;
+        if (newStatus === 'false') {
+            newStatus = false;
+        }
 
         addBookToLibrary(newTitle, newAuthor, newPages, newStatus)
         clearBooks()
